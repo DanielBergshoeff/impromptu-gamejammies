@@ -29,4 +29,15 @@ public class Door : MonoBehaviour
         hinge.DOLocalRotate(new Vector3(0, 0, 0), close.length - 0.7f).SetEase(Ease.InQuad);
         yield return new WaitForSeconds(close.length);
     }
+
+    [ContextMenu("TestOpenSlow")]
+    private void TestOpenSlow() {
+        StartCoroutine(TestOpenSlowRoutine());
+    }
+
+    private IEnumerator TestOpenSlowRoutine() {
+        yield return OpenSlow();
+        yield return new WaitForSeconds(1);
+        yield return Close();
+    }
 }
