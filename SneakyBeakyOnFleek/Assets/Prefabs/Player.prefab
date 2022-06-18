@@ -85,6 +85,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 3
   JumpStrength: 150
+  maxInteractionRange: 2
+  handTransform: {fileID: 7299772991603617731}
+  pickupTweenDuration: 0.1
 --- !u!114 &5216612961624950874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +183,19 @@ MonoBehaviour:
     m_ActionId: 112c07de-7dcf-443b-a958-2de8121c0b56
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 619595376806719810}
+        m_TargetAssemblyTypeName: MainCharacterController, Assembly-CSharp
+        m_MethodName: TryInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c0562009-410e-4cfd-b7ef-bb4b5d7d96e8
     m_ActionName: Player/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
@@ -1793,6 +1808,7 @@ Transform:
   - {fileID: 8741055347307743330}
   - {fileID: 1545816687854821965}
   - {fileID: 2693581967979584848}
+  - {fileID: 7299772991603617731}
   m_Father: {fileID: 2049090420663323762}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 2.1985528, y: 4.677531, z: -6.2623906}
@@ -1919,6 +1935,36 @@ Transform:
   m_Father: {fileID: 7924449834708101394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 48.263077, y: -20.90037, z: 9.8762}
+--- !u!1 &7935593174282479414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7299772991603617731}
+  m_Layer: 0
+  m_Name: LefthandHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7299772991603617731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7935593174282479414}
+  m_LocalRotation: {x: 0.000000028987404, y: -0.11046861, z: -0.000000052576052, w: 0.9938796}
+  m_LocalPosition: {x: -0.001, y: 0.118, z: 0.087}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7163725772075150609}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -12.685, z: 0}
 --- !u!1 &7995063571202681854
 GameObject:
   m_ObjectHideFlags: 0

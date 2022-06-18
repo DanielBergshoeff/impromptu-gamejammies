@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class MainCharacterController : MonoBehaviour
 {
 	public float MoveSpeed = 3.0f;
 	public float JumpStrength = 200f;
+
+	[Space][Header("Interaction")]
+	[SerializeField] private float maxInteractionRange = 2;
+	[SerializeField] private Transform handTransform = default;
+	[SerializeField] private float pickupTweenDuration = 0.1f;
 
 	private Rigidbody myRigidbody;
 	private Animator myAnimator;
@@ -16,6 +23,8 @@ public class MainCharacterController : MonoBehaviour
 	private bool isGrounded = false;
 	private float isGroundedRaycastLength = 0.02f;
 	private float rotationSpeed = 720f;
+
+	private Interactable holdingInteractable = null;
 
     // Start is called before the first frame update
     void Start()
@@ -69,5 +78,45 @@ public class MainCharacterController : MonoBehaviour
 	public void SetMoveInput(InputAction.CallbackContext callback)
 	{
 		moveDir = callback.ReadValue<Vector2>();
+	}
+
+	public void TryInteract(InputAction.CallbackContext callback) {
+		if (callback.phase != InputActionPhase.Started) { return; }
+
+		if (holdingInteractable != null) {
+			DropInteractable();
+			return;
+        }
+
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, maxInteractionRange);
+		List<Collider> sortedColliders = new List<Collider>(hitColliders);
+		sortedColliders.Sort((a, b) => { return Vector3.Distance(transform.position, a.transform.position).CompareTo(Vector3.Distance(transform.position, b.transform.position)); });
+		foreach (var hitCollider in sortedColliders) {
+			Interactable interactable = hitCollider.GetComponent<Interactable>();
+			if (interactable != null) {
+				if (interactable.CanPickUp) {
+					TryPickupInteractable(interactable);
+					break;
+				}
+            }
+		}
+	}
+
+    private void TryPickupInteractable(Interactable interactable) {
+		if (holdingInteractable != null) {
+			return;
+        }
+
+		holdingInteractable = interactable;
+		interactable.transform.SetParent(handTransform, true);
+        interactable.transform.DOLocalMove(Vector3.zero, pickupTweenDuration);
+        interactable.transform.DOLocalRotate(Vector3.zero, pickupTweenDuration);
+        interactable.DisablePhysics();
+	}
+
+	private void DropInteractable() {
+		holdingInteractable.transform.SetParent(null, true);
+		holdingInteractable.EnablePhysics();
+		holdingInteractable = null;
 	}
 }
