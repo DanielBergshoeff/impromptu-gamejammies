@@ -1,12 +1,13 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Warden : MonoBehaviour
-{
+public class Warden : SerializedMonoBehaviour {
+
     [Header("References")]
-    [SerializeField] private WardenCheckableTest checkable = default;
+    [SerializeField] private WardenCheckable checkable = default;
     [SerializeField] private AudioSource audioSource = default;
     [SerializeField] private Door door = default;
 

@@ -1058,6 +1058,26 @@ PrefabInstance:
       propertyPath: checkable
       value: 
       objectReference: {fileID: 1102468853}
+    - target: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+    - target: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"checkable","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3605158662219892361, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1102468853}
     - target: {fileID: 3605158662219892366, guid: 4dccbca82d10f3646a14a9bfcb288136, type: 3}
       propertyPath: m_RootOrder
       value: 2
