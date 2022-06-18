@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class RandomAudioClip
 {
+    public bool HasClips {
+        get {
+            return clips != null && clips.Count > 0;
+        }
+    }
     [SerializeField] private List<AudioClip> clips = new List<AudioClip>();
 
 

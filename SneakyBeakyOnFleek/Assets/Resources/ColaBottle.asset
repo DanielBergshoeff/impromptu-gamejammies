@@ -13,3 +13,12 @@ MonoBehaviour:
   m_Name: ColaBottle
   m_EditorClassIdentifier: 
   Prefab: {fileID: 488240792905733622, guid: 1a59962ce5446c2469eba45ae937cf46, type: 3}
+  GrabSound:
+    clips:
+    - {fileID: 8300000, guid: addcd8c360e92f444810b4184d50dc2e, type: 3}
+    - {fileID: 8300000, guid: 4046250bcefd8664fa647c7865a8ab6c, type: 3}
+    - {fileID: 8300000, guid: 5f2bd8e4446f0304e844f4940f944632, type: 3}
+    - {fileID: 8300000, guid: b5988f5839d295d49b0ed42d08edb548, type: 3}
+    - {fileID: 8300000, guid: 8b879a945d82b504e801f2b3a5a17354, type: 3}
+    - {fileID: 8300000, guid: fa814031f4073fa4a8752d3739434d3a, type: 3}
+    - {fileID: 8300000, guid: f30a9b197073f444e8600a83ee36eef9, type: 3}

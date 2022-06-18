@@ -15,7 +15,7 @@ public class Door : MonoBehaviour
     [SerializeField] private float degreesOpenSlow = 70;
 
     public IEnumerator OpenSlow() {
-        source.PlayOneShot(openSlow, 0.75f);
+        source.PlayOneShot(openSlow, 0.5f);
         hinge.DOLocalRotate(new Vector3(0, -degreesOpenSlow, 0), openSlow.length).SetEase(Ease.OutQuad);
         yield return new WaitForSeconds(openSlow.length);
     }
@@ -25,7 +25,7 @@ public class Door : MonoBehaviour
     }
 
     public IEnumerator Close() {
-        source.PlayOneShot(close, 0.75f);
+        source.PlayOneShot(close, 0.5f);
         hinge.DOLocalRotate(new Vector3(0, 0, 0), close.length - 0.7f).SetEase(Ease.InQuad);
         yield return new WaitForSeconds(close.length);
     }

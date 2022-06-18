@@ -105,11 +105,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FootfallAudioClips:
-  - {fileID: 8300000, guid: c0fcb6802e633ad4d9174c8d71ab7f20, type: 3}
-  - {fileID: 8300000, guid: 61877df5058b2ed418e392f625d1a47f, type: 3}
-  - {fileID: 8300000, guid: 1c4c57a2ac0c64c4b91869b0e6be49e1, type: 3}
-  - {fileID: 8300000, guid: bc9a9d73be3347a41a0ada56af2d755b, type: 3}
-  - {fileID: 8300000, guid: e7d5c90a442d75c4985673d4f2cbced8, type: 3}
+    clips:
+    - {fileID: 8300000, guid: c0fcb6802e633ad4d9174c8d71ab7f20, type: 3}
+    - {fileID: 8300000, guid: 61877df5058b2ed418e392f625d1a47f, type: 3}
+    - {fileID: 8300000, guid: 1c4c57a2ac0c64c4b91869b0e6be49e1, type: 3}
+    - {fileID: 8300000, guid: bc9a9d73be3347a41a0ada56af2d755b, type: 3}
+  GrabClips:
+    clips:
+    - {fileID: 8300000, guid: 290cdec02d9986f45af84f11b2bf44cc, type: 3}
+    - {fileID: 8300000, guid: bf0b595ba20954f49933eb1cf25e83ed, type: 3}
+    - {fileID: 8300000, guid: 3f873d58d1c911948af9c870efb00cd8, type: 3}
+    - {fileID: 8300000, guid: 63c83c98dabd02e4fb21db0b6c0d9138, type: 3}
 --- !u!114 &7249700942467934806
 MonoBehaviour:
   m_ObjectHideFlags: 0

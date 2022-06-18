@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,18 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class PlayerAudio : MonoBehaviour
 {
-	public List<AudioClip> FootfallAudioClips;
+	public RandomAudioClip FootfallAudioClips;
+	public RandomAudioClip GrabClips;
 
+	private MainCharacterController mainCharacterController;
 	private AnimationListener myAnimationListener;
 	private AudioSource myAudioSource;
+    private float lastGrabSoundTime;
 
-	// Start is called before the first frame update
-	void Start()
+    // Start is called before the first frame update
+    void Awake()
     {
+		mainCharacterController = GetComponent<MainCharacterController>();
 		myAnimationListener = GetComponent<AnimationListener>();
 		myAnimationListener.FootfallEvent.AddListener(OnFootFall);
 		myAudioSource = GetComponent<AudioSource>();
@@ -20,26 +25,46 @@ public class PlayerAudio : MonoBehaviour
 
     private void OnEnable() {
 		GameEvents.OnComboExecuted += HandleComboExecuted;
-    }
+		mainCharacterController.OnPickedUpInteractable += HandlePickedUpInteractable;
+		mainCharacterController.OnDroppedInteractable += HandleDroppedInteractable;
+	}
 
     private void OnDisable() {
 		GameEvents.OnComboExecuted -= HandleComboExecuted;
-    }
+		mainCharacterController.OnPickedUpInteractable -= HandlePickedUpInteractable;
+		mainCharacterController.OnDroppedInteractable += HandleDroppedInteractable;
+	}
 
     private void OnFootFall()
 	{
-		if(FootfallAudioClips.Count == 0)
-		{
-			return;
+		if(FootfallAudioClips.HasClips) {
+			myAudioSource.PlayOneShot(FootfallAudioClips);
 		}
-
-		int rndNumber = Random.Range(0, FootfallAudioClips.Count);
-		myAudioSource.PlayOneShot(FootfallAudioClips[rndNumber]);
 	}
 
 	private void HandleComboExecuted(InteractionCombo combo) {
 		if (combo.CombineSound != null) {
 			myAudioSource.PlayOneShot(combo.CombineSound);
 		}
+	}
+
+	private void HandlePickedUpInteractable(Interactable interactable) {
+		PlayGrabSound();
+		if (interactable.Data.GrabSound.HasClips) {
+			myAudioSource.PlayOneShot(interactable.Data.GrabSound);
+		}
+	}
+
+	private void HandleDroppedInteractable(Interactable interactable) {
+		PlayGrabSound();
+		if (interactable.Data.GrabSound.HasClips) {
+			myAudioSource.PlayOneShot(interactable.Data.GrabSound);
+		}
+	}
+
+    private void PlayGrabSound() {
+		if (Time.time - lastGrabSoundTime < 0.2f) { return; }
+		myAudioSource.PlayOneShot(GrabClips);
+		lastGrabSoundTime = Time.time;
 	}
 }

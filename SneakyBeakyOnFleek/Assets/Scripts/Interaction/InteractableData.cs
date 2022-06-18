@@ -6,4 +6,5 @@ using UnityEngine;
 public class InteractableData : ScriptableObject
 {
     public Interactable Prefab = default;
+    public RandomAudioClip GrabSound = default;
 }

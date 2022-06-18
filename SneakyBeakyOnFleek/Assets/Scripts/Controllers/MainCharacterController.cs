@@ -8,6 +8,9 @@ using DG.Tweening;
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class MainCharacterController : MonoBehaviour, WardenCheckable {
 
+	public Action<Interactable> OnPickedUpInteractable = null;
+	public Action<Interactable> OnDroppedInteractable = null;
+
 	public bool IsInBed => isInBed;
 
 	public float MoveSpeed = 3.0f;
@@ -168,12 +171,17 @@ public class MainCharacterController : MonoBehaviour, WardenCheckable {
         interactable.transform.DOLocalRotate(Vector3.zero, pickupTweenDuration);
         interactable.DisablePhysics();
 		interactable.DisableInteraction();
+
+		OnPickedUpInteractable?.Invoke(interactable);
 	}
 
 	private void DropInteractable() {
 		holdingInteractable.transform.SetParent(null, true);
 		holdingInteractable.EnablePhysics();
 		holdingInteractable.EnableInteraction();
+
+		OnDroppedInteractable?.Invoke(holdingInteractable);
+
 		holdingInteractable = null;
 	}
 }
