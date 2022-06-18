@@ -67,8 +67,11 @@ public class MainCharacterController : MonoBehaviour, WardenCheckable {
 
     private void Move()
 	{
+		Vector3 camForward = new Vector3(Camera.main.transform.forward.x, 0f, Camera.main.transform.forward.z).normalized;
+		Vector3 camRight = new Vector3(Camera.main.transform.right.x, 0f, Camera.main.transform.right.z).normalized;
+
 		myAnimator.SetFloat("MoveSpeed", moveDir.magnitude);
-		Vector3 moveDir3D = new Vector3(moveDir.x, 0f, moveDir.y);
+		Vector3 moveDir3D = camForward * moveDir.y + camRight * moveDir.x;
 		transform.position +=  moveDir3D * Time.deltaTime * MoveSpeed;
 		if(moveDir.sqrMagnitude > 0.1f)
 		{
