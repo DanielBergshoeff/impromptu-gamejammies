@@ -16,7 +16,7 @@ public class FailureScreen : MonoBehaviour
     private void Awake() {
         failureOverlay.gameObject.SetActive(false);
         failureOverlay.alpha = 0;
-        GameEvents.OnPlayerSpotted += HandlePlayerSpotted;
+        GameEvents.OnWardenSpottedPlayer += HandlePlayerSpotted;
         retryButton.onClick.AddListener(HandleRetryButtonClick);
     }
 
