@@ -58,7 +58,7 @@ public class Warden : MonoBehaviour
     }
 
     private IEnumerator CheckForFailure() {
-        yield return null;
+        yield return new WaitForSeconds(2);
     }
 
     // play footsteps slowly, building up in volume according to curve
