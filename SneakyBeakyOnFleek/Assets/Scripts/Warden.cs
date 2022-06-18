@@ -33,9 +33,9 @@ public class Warden : SerializedMonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            HandleSlowCheckup();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        //    HandleSlowCheckup();
+        //}
     }
 
     private void HandleSlowCheckup() {
