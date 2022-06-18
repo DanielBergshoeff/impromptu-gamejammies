@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class ThoughtBubble : MonoBehaviour {
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip appearSound;
+    [SerializeField] private AudioClip changeSound;
     [SerializeField] private InteractionCombo testCombo;
     [SerializeField] private Image imageContainer;
     [SerializeField] private float timePerImage = 0.5f;
@@ -31,6 +34,7 @@ public class ThoughtBubble : MonoBehaviour {
         currentCycle = 1;
         UpdateImage();
         canvasGroup.alpha = 1;
+        audioSource.PlayOneShot(appearSound);
     }
 
     [ContextMenu("Test bubble")]
@@ -64,5 +68,6 @@ public class ThoughtBubble : MonoBehaviour {
         if (currentSequence.Count <= currentIndex) { return; }
 
         imageContainer.sprite = currentSequence[currentIndex];
+        audioSource.PlayOneShot(changeSound);
     }
 }
