@@ -20,6 +20,10 @@ public class FailureScreen : MonoBehaviour
         retryButton.onClick.AddListener(HandleRetryButtonClick);
     }
 
+    private void OnDestroy() {
+        GameEvents.OnWardenSpottedPlayer -= HandlePlayerSpotted;
+    }
+
     private void HandlePlayerSpotted() {
         failureOverlay.gameObject.SetActive(true);
         failureOverlay.DOFade(1, 0.5f);
