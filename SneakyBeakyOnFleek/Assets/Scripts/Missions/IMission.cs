@@ -17,5 +17,6 @@ public enum MissionType
 {
 	None,
 	GoTo,
-	Fetch
+	Fetch,
+	Combine
 }

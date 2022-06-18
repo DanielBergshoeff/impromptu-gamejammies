@@ -28,7 +28,7 @@ public class MissionManager : MonoBehaviour
 			if(missions.Count > 0)
 			{
 				currentMission = missions.Dequeue();
-				SetMissionPrompt(currentMission.Title);
+				SetupMission();
 			}
 			else
 			{
@@ -37,26 +37,68 @@ public class MissionManager : MonoBehaviour
 		}
     }
 
+	private void SetupMission()
+	{
+		switch (currentMission.MyType)
+		{
+			case MissionType.Combine:
+				GameEvents.OnComboExecuted += EvaluateCombine;
+				break;
+			default:
+				break;
+		}
+
+		SetMissionPrompt(currentMission.Title);
+	}
+
+	private void FinishMission()
+	{
+		switch (currentMission.MyType)
+		{
+			case MissionType.Combine:
+				GameEvents.OnComboExecuted -= EvaluateCombine;
+				break;
+			default:
+				break;
+		}
+
+		currentMission = null;
+	}
+
+	private void EvaluateCombine(InteractionCombo combo)
+	{
+		if(currentMission.Evaluate(new CombineMissionEvaluateInfo(combo.Result)))
+		{
+			FinishMission();
+		}
+	}
+
 	private void EvaluateMission()
 	{
+		MissionEvaluateInfo info = null;
+
 		switch (currentMission.MyType)
 		{
 			case MissionType.None:
 				break;
 			case MissionType.GoTo:
-				if(currentMission.Evaluate(new GoToMissionEvaluateInfo(Player.transform.position)))
-				{
-					currentMission = null;
-				}
+				info = new GoToMissionEvaluateInfo(Player.transform.position);
 				break;
 			case MissionType.Fetch:
-				if(currentMission.Evaluate(new FetchMissionEvaluateInfo()))
-				{
-					currentMission = null;
-				}
+				info = new FetchMissionEvaluateInfo();
 				break;
 			default:
 				break;
+		}
+		
+		if(info == null)
+		{
+			return;
+		}	
+
+		if(currentMission.Evaluate(info))
+		{
+			FinishMission();
 		}
 	}
 
@@ -77,6 +119,14 @@ public class MissionManager : MonoBehaviour
 	{
 		FetchMission mission = new FetchMission();
 		mission.Create(new FetchMissionInfo(targetPosition, maxDistance, fetchObject));
+		mission.Title = title;
+		missions.Enqueue(mission);
+	}
+
+	public void CreateCombineMission(InteractableData combinedObject, string title)
+	{
+		CombineMission mission = new CombineMission();
+		mission.Create(new CombineMissionInfo(combinedObject));
 		mission.Title = title;
 		missions.Enqueue(mission);
 	}
