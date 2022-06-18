@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractableOne: {fileID: 11400000, guid: 89748789e53ccc8489d2d6be4b6289e7, type: 2}
   InteractableTwo: {fileID: 11400000, guid: 7c578786007cbff4c9f3e4860b724dbf, type: 2}
-  Result: {fileID: 0}
+  Result: {fileID: 11400000, guid: 6e0f8e1b4e370964183953e540060c97, type: 2}
+  CombineSound: {fileID: 0}

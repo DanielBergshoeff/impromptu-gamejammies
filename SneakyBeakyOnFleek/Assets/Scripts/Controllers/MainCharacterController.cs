@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
-public class MainCharacterController : MonoBehaviour
-{
+public class MainCharacterController : MonoBehaviour, WardenCheckable {
+
+	public bool IsInBed => isInBed;
+
 	public float MoveSpeed = 3.0f;
 	public float JumpStrength = 200f;
 
@@ -16,6 +18,9 @@ public class MainCharacterController : MonoBehaviour
 	[SerializeField] private Transform handTransform = default;
 	[SerializeField] private float pickupTweenDuration = 0.1f;
 	[SerializeField] private List<InteractionCombo> availableCombos = new List<InteractionCombo>();
+
+	[Space][Header("Trigger Marker Data")]
+	[SerializeField] private TriggerMarkerData inBedMarker = default;
 
 	private Rigidbody myRigidbody;
 	private Animator myAnimator;
@@ -26,6 +31,7 @@ public class MainCharacterController : MonoBehaviour
 	private float rotationSpeed = 720f;
 
 	private Interactable holdingInteractable = null;
+	private bool isInBed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +47,25 @@ public class MainCharacterController : MonoBehaviour
 		CheckIfGrounded();
     }
 
-	private void Move()
+    private void OnTriggerEnter(Collider other) {
+		TriggerMarker triggerMarker = other.GetComponent<TriggerMarker>();
+		if (triggerMarker != null) {
+			if (triggerMarker.Data == inBedMarker) {
+				isInBed = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+		TriggerMarker triggerMarker = other.GetComponent<TriggerMarker>();
+		if (triggerMarker != null) {
+			if (triggerMarker.Data == inBedMarker) {
+				isInBed = false;
+			}
+		}
+	}
+
+    private void Move()
 	{
 		myAnimator.SetFloat("MoveSpeed", moveDir.magnitude);
 		Vector3 moveDir3D = new Vector3(moveDir.x, 0f, moveDir.y);

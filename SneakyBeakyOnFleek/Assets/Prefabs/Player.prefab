@@ -88,6 +88,9 @@ MonoBehaviour:
   maxInteractionRange: 2
   handTransform: {fileID: 7299772991603617731}
   pickupTweenDuration: 0.1
+  availableCombos:
+  - {fileID: 11400000, guid: 93f4f74a78720194b8b28edf95bf87eb, type: 2}
+  inBedMarker: {fileID: 11400000, guid: 11cae1c00af5af34ab3c971b8e1cd447, type: 2}
 --- !u!114 &5216612961624950874
 MonoBehaviour:
   m_ObjectHideFlags: 0

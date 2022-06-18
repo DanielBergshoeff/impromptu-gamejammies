@@ -28,8 +28,12 @@ public class Warden : SerializedMonoBehaviour {
     private bool isInCheckup = false;
     private bool sawCheckableOutsideOfBed = false;
 
-    private void Start() {
-        
+    private void OnEnable() {
+        GameEvents.TriggerWardenSlow += HandleSlowCheckup;
+    }
+
+    private void OnDisable() {
+        GameEvents.TriggerWardenSlow -= HandleSlowCheckup;
     }
 
     private void Update() {
@@ -51,13 +55,14 @@ public class Warden : SerializedMonoBehaviour {
         yield return CheckForFailure(slowCheckupWaitTime);
         if (sawCheckableOutsideOfBed) {
             yield return FailureReaction();
-            GameEvents.OnPlayerSpotted?.Invoke();
+            GameEvents.OnWardenSpottedPlayer?.Invoke();
             yield break;
         }
         yield return door.Close();
         yield return WalkAway();
 
         isInCheckup = false;
+        GameEvents.OnWardenFinishedCheckup?.Invoke();
     }
 
     private IEnumerator FailureReaction() {

@@ -140,14 +140,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adaca4d3e51458e438032b76a8896743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkable: {fileID: 0}
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: checkable
+      Entry: 6
+      Data: 
   audioSource: {fileID: 3605158662219892367}
   door: {fileID: 0}
-  slowCheckupStepTime: 0.7
-  slowCheckupStepAmount: 15
+  slowCheckupStepTime: 0.6
+  slowCheckupStepAmount: 10
   slowCheckupWaitTime: 2
   walkawayFootstepAmount: 7
-  walkawayStepTime: 1
+  walkawayStepTime: 0.75
   footstepVolumeCurve:
     serializedVersion: 2
     m_Curve:
