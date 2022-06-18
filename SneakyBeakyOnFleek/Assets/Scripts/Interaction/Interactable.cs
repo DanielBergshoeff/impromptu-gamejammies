@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public bool CanPickUp => canPickUp;
+    public bool IsInteractable => isInteractable;
+    public InteractableData Data = default;
 
-    [SerializeField] private bool canPickUp = true;
+    [SerializeField] private bool isInteractable = true;
     [SerializeField] private Rigidbody body = default;
     [SerializeField] private new Collider collider = default;
 
@@ -15,8 +16,16 @@ public class Interactable : MonoBehaviour
         collider.enabled = true;
     }
 
+    public void DisableInteraction() {
+        isInteractable = false;
+    }
+
     public void DisablePhysics() {
         body.isKinematic = true;
         collider.enabled = false;
+    }
+
+    public void EnableInteraction() {
+        isInteractable = true;
     }
 }

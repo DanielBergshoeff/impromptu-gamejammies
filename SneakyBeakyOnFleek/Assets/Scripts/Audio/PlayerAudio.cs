@@ -18,7 +18,15 @@ public class PlayerAudio : MonoBehaviour
 		myAudioSource = GetComponent<AudioSource>();
     }
 
-	private void OnFootFall()
+    private void OnEnable() {
+		GameEvents.OnComboExecuted += HandleComboExecuted;
+    }
+
+    private void OnDisable() {
+		GameEvents.OnComboExecuted -= HandleComboExecuted;
+    }
+
+    private void OnFootFall()
 	{
 		if(FootfallAudioClips.Count == 0)
 		{
@@ -27,5 +35,11 @@ public class PlayerAudio : MonoBehaviour
 
 		int rndNumber = Random.Range(0, FootfallAudioClips.Count);
 		myAudioSource.PlayOneShot(FootfallAudioClips[rndNumber]);
+	}
+
+	private void HandleComboExecuted(InteractionCombo combo) {
+		if (combo.CombineSound != null) {
+			myAudioSource.PlayOneShot(combo.CombineSound);
+		}
 	}
 }

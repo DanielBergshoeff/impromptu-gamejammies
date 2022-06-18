@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6cb203dc7d829546a7d72c5bc180797, type: 3}
+  m_Name: ComboFuel
+  m_EditorClassIdentifier: 
+  InteractableOne: {fileID: 11400000, guid: 89748789e53ccc8489d2d6be4b6289e7, type: 2}
+  InteractableTwo: {fileID: 11400000, guid: 7c578786007cbff4c9f3e4860b724dbf, type: 2}
+  Result: {fileID: 0}

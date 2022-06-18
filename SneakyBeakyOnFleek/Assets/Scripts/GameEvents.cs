@@ -6,4 +6,5 @@ using UnityEngine;
 public static class GameEvents
 {
     public static Action OnPlayerSpotted = null;
+    public static Action<InteractionCombo> OnComboExecuted = null;
 }

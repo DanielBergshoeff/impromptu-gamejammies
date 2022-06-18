@@ -15,6 +15,7 @@ public class MainCharacterController : MonoBehaviour
 	[SerializeField] private float maxInteractionRange = 2;
 	[SerializeField] private Transform handTransform = default;
 	[SerializeField] private float pickupTweenDuration = 0.1f;
+	[SerializeField] private List<InteractionCombo> availableCombos = new List<InteractionCombo>();
 
 	private Rigidbody myRigidbody;
 	private Animator myAnimator;
@@ -83,28 +84,55 @@ public class MainCharacterController : MonoBehaviour
 	public void TryInteract(InputAction.CallbackContext callback) {
 		if (callback.phase != InputActionPhase.Started) { return; }
 
+		Interactable nearestInteractable = GetNearestInteractable();
+
 		if (holdingInteractable != null) {
+			if (nearestInteractable != null) {
+				if(TryCombineInteractable(nearestInteractable)) {
+					return;
+                }
+			}
 			DropInteractable();
 			return;
-        }
+        } 
+		else {
+			if (nearestInteractable != null) {
+				PickupInteractable(nearestInteractable);
+			}
+		}
+	}
 
+    private bool TryCombineInteractable(Interactable nearestInteractable) {
+		InteractionCombo combo = availableCombos.Find(x => { return (x.InteractableOne == holdingInteractable.Data && x.InteractableTwo == nearestInteractable.Data) || (x.InteractableOne == nearestInteractable.Data && x.InteractableTwo == holdingInteractable.Data); });
+		if (combo != null) {
+			Destroy(nearestInteractable.gameObject);
+			Destroy(holdingInteractable.gameObject);
+			holdingInteractable = null;
+			PickupInteractable(Instantiate(combo.Result.Prefab.gameObject, handTransform.position, handTransform.rotation).GetComponent<Interactable>());
+			GameEvents.OnComboExecuted?.Invoke(combo);
+			return true;
+        }
+		return false;
+    }
+
+    private Interactable GetNearestInteractable() {
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, maxInteractionRange);
 		List<Collider> sortedColliders = new List<Collider>(hitColliders);
 		sortedColliders.Sort((a, b) => { return Vector3.Distance(transform.position, a.transform.position).CompareTo(Vector3.Distance(transform.position, b.transform.position)); });
 		foreach (var hitCollider in sortedColliders) {
 			Interactable interactable = hitCollider.GetComponent<Interactable>();
 			if (interactable != null) {
-				if (interactable.CanPickUp) {
-					TryPickupInteractable(interactable);
-					break;
+				if (interactable.IsInteractable) {
+					return interactable;
 				}
-            }
+			}
 		}
+		return null;
 	}
 
-    private void TryPickupInteractable(Interactable interactable) {
+    private void PickupInteractable(Interactable interactable) {
 		if (holdingInteractable != null) {
-			return;
+			DropInteractable();
         }
 
 		holdingInteractable = interactable;
@@ -112,11 +140,13 @@ public class MainCharacterController : MonoBehaviour
         interactable.transform.DOLocalMove(Vector3.zero, pickupTweenDuration);
         interactable.transform.DOLocalRotate(Vector3.zero, pickupTweenDuration);
         interactable.DisablePhysics();
+		interactable.DisableInteraction();
 	}
 
 	private void DropInteractable() {
 		holdingInteractable.transform.SetParent(null, true);
 		holdingInteractable.EnablePhysics();
+		holdingInteractable.EnableInteraction();
 		holdingInteractable = null;
 	}
 }
